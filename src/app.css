@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.outer-container {
+  display: flex;
+  flex-direction: column;
+}
+.files {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}

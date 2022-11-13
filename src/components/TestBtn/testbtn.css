@@ -1,0 +1,8 @@
+.test {
+  border: 1px solid red;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-end;
+}

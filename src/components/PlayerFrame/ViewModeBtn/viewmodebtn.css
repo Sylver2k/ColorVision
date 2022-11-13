@@ -1,0 +1,11 @@
+.view-mode {
+  border: 1px solid red;
+  width: 48px;
+  height: 48px;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 20px;
+  margin-right: 20px;
+}

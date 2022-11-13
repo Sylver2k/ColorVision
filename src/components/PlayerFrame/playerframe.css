@@ -1,0 +1,19 @@
+.playerframe {
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+.multiview-container {
+  display: flex;
+  width: 1080px;
+}
+.viewcontainer {
+  display: flex;
+}
+.controls {
+  display: flex;
+  margin-top: 20px;
+}
