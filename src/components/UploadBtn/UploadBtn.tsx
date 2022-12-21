@@ -1,24 +1,22 @@
-import './uploadbtn.css';
 import UploadBtnProps from 'interfaces/UploadBtnProps';
+import React from "react";
 
 /**
  * The user can upload their own video
- * @param setSelectedFile sets the state when a files was uploaded
+ * @param setSelectedFile sets the state when  files were uploaded
+ * @returns upload button
+ */
+/**
+ * The user can upload their own video
+ * @param setSelectedFile sets the state when  files were uploaded
  * @returns upload button
  */
 function UploadBtn({ setSelectedFile }: UploadBtnProps) {
-  const uploadFile = () => {
-    const uploadedFile: string = '';
-    /**
-     * TODO: Upload file implementation
-     */
-    setSelectedFile(uploadedFile);
-  };
-  return (
-    <div className="upload" onClick={uploadFile}>
-      Upload
-    </div>
-  );
+
+    return (
+        <input type="file" className="upload" onChange={(event:any) => {setSelectedFile(URL.createObjectURL(event.target.files[0]))}}>
+        </input>
+    )
 }
 
 export default UploadBtn;
