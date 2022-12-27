@@ -17,10 +17,15 @@ function App() {
      */
     setColorblindFile(convertedFile);
   };
+
+  const useDefaultVideoOrUserInput = (selectedFile: string): string => {
+    return selectedFile === "default.mp4" ? '/Videos/default.mp4' : selectedFile
+  }
+
   return (
     <div className="outer-container">
       <PlayerFrame
-        selectedFile={selectedFile}
+        selectedFile={useDefaultVideoOrUserInput(selectedFile)}
         colorblindFile={colorblindFile}
       />
       <div className="files">
