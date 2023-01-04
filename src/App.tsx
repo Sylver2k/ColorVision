@@ -30,6 +30,14 @@ function App() {
       />
       <div className="files">
         <UploadBtn setSelectedFile={setSelectedFile}></UploadBtn>
+        <select name="cvdselector" id="cvd">
+          <option value="Protanopia">Protanopia</option>
+          <option value="Protanomaly">Protanomaly</option>
+          <option value="Deuteranopia">Deuteranopia</option>
+          <option value="Deuteranomaly">Deuteranomaly</option>
+          <option value="Tritanopia">Tritanopia</option>
+          <option value="Tritanomaly">Tritanomaly</option>
+        </select>
         <DownloadBtn selectedFile={selectedFile}></DownloadBtn>
       </div>
     </div>

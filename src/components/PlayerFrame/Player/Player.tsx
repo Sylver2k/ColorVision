@@ -70,7 +70,12 @@ function Player({
   let ctx: CanvasRenderingContext2D;
   let metaData: MetaData;
 
+  let cvd: string
+
   const loadVariables = (): void => {
+    const selector = document.getElementById("cvd") as HTMLSelectElement;
+    cvd = selector!.options[selector.selectedIndex].text;
+    
     video = document.getElementById("video") as HTMLVideoElement;
 
     video.addEventListener('loadeddata', () => {
@@ -130,10 +135,22 @@ function Player({
     blue: [0, 0.3, 0.7],
   }
 
+  const deuteranomaly = { // Severity 1
+    red: [0.367322, 0.860646, -0.227968],
+    green: [0.280085,	0.672501,	0.047413],
+    blue: [-0.011820,	0.042940,	0.968881],
+  }
+
   const tritanopia = {
     red: [0.95, 0.05, 0],
     green: [0, 0.433, 0.567],
     blue: [0, 0.475, 0.525],
+  }
+
+  const tritanomaly = { // Severtity = 1
+    red: [1.255528, -0.076749, -0.178779],
+    green: [-0.078411, 0.930809, 0.147602],
+    blue: [0.004733, 0.691367, 0.303900],
   }
 
   const getColorMatrixForBlindness = (blindness: string): ColorMatrix => {
@@ -144,8 +161,12 @@ function Player({
         return protanomaly;
       case "Deuteranopia":
         return deuteranopia;
+      case "Deuteranomaly":
+        return deuteranomaly;  
       case "Tritanopia":
         return tritanopia;
+      case "Tritanomaly":
+        return tritanomaly;
       default:
         return { red: [1,0,0], green: [0,1,0], blue: [0,0,1] }
     }
@@ -182,7 +203,7 @@ function Player({
     const imageData = ctx.getImageData(0, 0, colorBlindCanvas.width, colorBlindCanvas.height);
 
     const data = imageData.data;
-    const colormatrix = getColorMatrixForBlindness("Protanopia"); //Should be coming from the 'blindess selector' component
+    const colormatrix = getColorMatrixForBlindness(cvd);
     
     for (let i = 0; i < data.length; i += 4) {
       let red = data[i],
