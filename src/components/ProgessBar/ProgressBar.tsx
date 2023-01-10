@@ -4,9 +4,10 @@ import ProgressBarProps from 'interfaces/ProgressBarProps';
 /**
  * The user can change the video position (time)
  * @param setTimePosition sets the state if time position has changed
+ * @param videoPosition passes the video position for the progress bar as value
  * @returns the progress bar
  */
-function ProgressBar({ setTimePosition }: ProgressBarProps) {
+function ProgressBar({ setTimePosition, videoPosition }: ProgressBarProps) {
   return (
     <div className="placeholer">
       <input
@@ -15,6 +16,7 @@ function ProgressBar({ setTimePosition }: ProgressBarProps) {
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           setTimePosition(parseInt(event.target.value))
         }
+        // value={videoPosition}
       ></input>
     </div>
   );
