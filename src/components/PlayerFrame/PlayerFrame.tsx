@@ -19,6 +19,8 @@ function PlayerFrame({ selectedFile, colorblindFile }: PlayerFrameProps) {
   const [isMultiView, setIsMultiView] = useState<boolean>(false);
   const [currentVolume, setCurrentVolume] = useState<number>(50);
   const [timePosition, setTimePosition] = useState<number>(0);
+  const [videoPosition, setVideoPosition] = useState<number | undefined>(0);
+
   return (
     <div className="playerframe">
       <div className="viewcontainer">
@@ -31,6 +33,7 @@ function PlayerFrame({ selectedFile, colorblindFile }: PlayerFrameProps) {
             currentVolume={currentVolume}
             colorblindFile={colorblindFile}
             timePosition={timePosition}
+            setVideoPosition={setVideoPosition}
           />
         ) : (
           <div className="multiview-container">
@@ -42,6 +45,7 @@ function PlayerFrame({ selectedFile, colorblindFile }: PlayerFrameProps) {
               currentVolume={currentVolume}
               colorblindFile={colorblindFile}
               timePosition={timePosition}
+              setVideoPosition={setVideoPosition}
             />
             <Player
               isPaused={isPaused}
@@ -51,13 +55,17 @@ function PlayerFrame({ selectedFile, colorblindFile }: PlayerFrameProps) {
               currentVolume={currentVolume}
               colorblindFile={colorblindFile}
               timePosition={timePosition}
+              setVideoPosition={setVideoPosition}
             />
           </div>
         )}
         <ViewMode isMultiView={isMultiView} setIsMultiView={setIsMultiView} />
         <TestBtn />
       </div>
-      <ProgressBar setTimePosition={setTimePosition} />
+      <ProgressBar
+        setTimePosition={setTimePosition}
+        videoPosition={videoPosition}
+      />
       <div className="controls">
         <PlayBtn isPaused={isPaused} setIsPaused={setIsPaused} />
         <VolumeBtn setCurrentVolume={setCurrentVolume} />

@@ -17,14 +17,27 @@ function App() {
      */
     setColorblindFile(convertedFile);
   };
+
+  const useDefaultVideoOrUserInput = (selectedFile: string): string => {
+    return selectedFile === "default.mp4" ? '/Videos/default.mp4' : selectedFile
+  }
+
   return (
     <div className="outer-container">
       <PlayerFrame
-        selectedFile={selectedFile}
+        selectedFile={useDefaultVideoOrUserInput(selectedFile)}
         colorblindFile={colorblindFile}
       />
       <div className="files">
         <UploadBtn setSelectedFile={setSelectedFile}></UploadBtn>
+        <select name="cvdselector" id="cvd">
+          <option value="Protanopia">Protanopia</option>
+          <option value="Protanomaly">Protanomaly</option>
+          <option value="Deuteranopia">Deuteranopia</option>
+          <option value="Deuteranomaly">Deuteranomaly</option>
+          <option value="Tritanopia">Tritanopia</option>
+          <option value="Tritanomaly">Tritanomaly</option>
+        </select>
         <DownloadBtn selectedFile={selectedFile}></DownloadBtn>
       </div>
     </div>
