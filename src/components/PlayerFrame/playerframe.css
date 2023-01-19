@@ -1,19 +1,27 @@
-.playerframe {
-  display: flex;
-  flex-direction: column;
-  width: 1200px;
+.playercontainer {
+  display: flex; 
+  width: 100%;
   align-items: center;
   justify-content: center;
   margin-top: 50px;
 }
 .multiview-container {
   display: flex;
-  width: 1080px;
+  width: 100%;
 }
-.viewcontainer {
+.playerframe {
   display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  width: 87%;
 }
 .controls {
   display: flex;
   margin-top: 20px;
+}
+.button-container {
+  display: flex;
+  width: 0;
+  height: 83%;
 }

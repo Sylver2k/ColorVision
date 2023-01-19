@@ -1,12 +1,12 @@
-import './playerframe.css';
-import PlayerFrameProps from 'interfaces/PlayerFrameProps';
-import ProgressBar from '../ProgessBar/ProgressBar';
-import {useRef, useState} from 'react';
-import PlayBtn from './PlayBtn/PlayBtn';
-import VolumeBtn from './VolumeBtn/VolumeBtn';
-import ViewMode from './ViewModeBtn/ViewModeBtn';
-import Player from './Player/Player';
-import TestBtn from '../TestBtn/TestBtn';
+import "./playerframe.css";
+import PlayerFrameProps from "interfaces/PlayerFrameProps";
+import ProgressBar from "../ProgessBar/ProgressBar";
+import { useRef, useState } from "react";
+import PlayBtn from "./PlayBtn/PlayBtn";
+import VolumeBtn from "./VolumeBtn/VolumeBtn";
+import ViewMode from "./ViewModeBtn/ViewModeBtn";
+import Player from "./Player/Player";
+import TestBtn from "../TestBtn/TestBtn";
 
 /**
  * The frame for the players and settings buttons
@@ -14,31 +14,23 @@ import TestBtn from '../TestBtn/TestBtn';
  * @param colorblindFile the converted file
  * @returns the complete player frame
  */
-function PlayerFrame({ selectedFile, colorblindFile, videoRef, canvasRef }: PlayerFrameProps) {
+function PlayerFrame({
+  selectedFile,
+  colorblindFile,
+  videoRef,
+  canvasRef,
+}: PlayerFrameProps) {
   const [isPaused, setIsPaused] = useState<boolean>(true);
   const [isMultiView, setIsMultiView] = useState<boolean>(false);
   const [currentVolume, setCurrentVolume] = useState<number>(50);
   const [timePosition, setTimePosition] = useState<number>(0);
   const [videoPosition, setVideoPosition] = useState<number | undefined>(0);
 
-    return (
-    <div className="playerframe">
-      <div className="viewcontainer">
-        {!isMultiView ? (
-          <Player 
-            videoRef={videoRef} 
-            canvasRef={canvasRef}
-            isPaused={isPaused}
-            isColorblindMode={false}
-            isMultiView={isMultiView}
-            selectedFile={selectedFile}
-            currentVolume={currentVolume}
-            colorblindFile={colorblindFile}
-            timePosition={timePosition}
-            setVideoPosition={setVideoPosition}
-          />
-        ) : (
-          <div className="multiview-container">
+  return (
+    <div className="playercontainer">
+      <div className="playerframe">
+        <div>
+          {!isMultiView ? (
             <Player
               videoRef={videoRef}
               canvasRef={canvasRef}
@@ -51,30 +43,47 @@ function PlayerFrame({ selectedFile, colorblindFile, videoRef, canvasRef }: Play
               timePosition={timePosition}
               setVideoPosition={setVideoPosition}
             />
-            <Player 
-              videoRef={videoRef}
-              canvasRef={canvasRef}
-              isPaused={isPaused}
-              isColorblindMode={true}
-              isMultiView={isMultiView}
-              selectedFile={selectedFile}
-              currentVolume={currentVolume}
-              colorblindFile={colorblindFile}
-              timePosition={timePosition}
-              setVideoPosition={setVideoPosition}
-            />
-          </div>
-        )}
+          ) : (
+            <div className="multiview-container">
+              <Player
+                videoRef={videoRef}
+                canvasRef={canvasRef}
+                isPaused={isPaused}
+                isColorblindMode={false}
+                isMultiView={isMultiView}
+                selectedFile={selectedFile}
+                currentVolume={currentVolume}
+                colorblindFile={colorblindFile}
+                timePosition={timePosition}
+                setVideoPosition={setVideoPosition}
+              />
+              <Player
+                videoRef={videoRef}
+                canvasRef={canvasRef}
+                isPaused={isPaused}
+                isColorblindMode={true}
+                isMultiView={isMultiView}
+                selectedFile={selectedFile}
+                currentVolume={currentVolume}
+                colorblindFile={colorblindFile}
+                timePosition={timePosition}
+                setVideoPosition={setVideoPosition}
+              />
+            </div>
+          )}
+        </div>
+        <ProgressBar
+          setTimePosition={setTimePosition}
+          videoPosition={videoPosition}
+        />
+        <div className="controls">
+          <PlayBtn isPaused={isPaused} setIsPaused={setIsPaused} />
+          <VolumeBtn setCurrentVolume={setCurrentVolume} />
+        </div>
+      </div>
+      <div className="button-container">
         <ViewMode isMultiView={isMultiView} setIsMultiView={setIsMultiView} />
         <TestBtn />
-      </div>
-      <ProgressBar
-        setTimePosition={setTimePosition}
-        videoPosition={videoPosition}
-      />
-      <div className="controls">
-        <PlayBtn isPaused={isPaused} setIsPaused={setIsPaused} />
-        <VolumeBtn setCurrentVolume={setCurrentVolume} />
       </div>
     </div>
   );

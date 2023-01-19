@@ -83,6 +83,10 @@ function Player({
    * Video-Rendering Section
    */
 
+  const VIDEO_WIDTH = 1100;
+  const VIDEO_HEIGHT = 619;
+
+
   interface MetaData {
     videoWidth: HTMLVideoElement['videoWidth'];
     videoHeight: HTMLVideoElement['videoHeight'];
@@ -122,9 +126,9 @@ function Player({
 
   const renderVideoIntoCanvas = (): void => {
     video.addEventListener('loadeddata', () => {
-      video.width = metaData.videoWidth / 2;
-      colorBlindCanvas.width = metaData.videoWidth / 2;
-      colorBlindCanvas.height = metaData.videoHeight / 2;
+      video.width = VIDEO_WIDTH / 2;
+      colorBlindCanvas.width = VIDEO_WIDTH / 2;
+      colorBlindCanvas.height = VIDEO_HEIGHT / 2;
       function updateFrame() {
         applyColorFilter();
         requestAnimationFrame(updateFrame);
@@ -268,7 +272,7 @@ function Player({
         {isColorblindMode ? (
           <canvas ref={canvasRef} id="colorBlindCanvas"></canvas>
         ) : (
-          <video ref={videoRef} id="video" controls preload="metadata">
+          <video ref={videoRef} id="video" width={VIDEO_WIDTH} controls preload="metadata">
             <source src={selectedFile} type="video/mp4" />
           </video>
         )}
