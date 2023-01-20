@@ -1,0 +1,17 @@
+.background {
+    background-color: black;
+}
+
+.button-branding {
+    border: 1px solid red;
+    width: 89px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.button-branding:hover {
+    cursor: pointer;
+}

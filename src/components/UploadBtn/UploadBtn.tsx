@@ -8,10 +8,10 @@ import React from "react";
  */
 function UploadBtn({ setSelectedFile }: UploadBtnProps) {
 
-  return (
-      <input type="file" className="upload" onChange={(event:any) => {setSelectedFile(URL.createObjectURL(event.target.files[0]))}}>
-      </input>
-  )
+    return (
+        <input type="file" className="button-branding" onChange={(event:any) => {setSelectedFile(URL.createObjectURL(event.target.files[0]))}}>
+        </input>
+    )
 }
 
 export default UploadBtn;

@@ -31,7 +31,7 @@ function DownloadBtn({ selectedFile, canvasRef, videoRef }: DownloadBtnProps) {
     }
   };
   return (
-    <div className="download" onClick={() => capture()}>
+    <div className="button-branding" onClick={() => capture()}>
       Download
     </div>
   );
