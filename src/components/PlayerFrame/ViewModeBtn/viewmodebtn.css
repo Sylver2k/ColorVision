@@ -1,8 +1,18 @@
 .view-mode {
-  border: 1px solid red;
+  border: 1px solid rgba(18, 18, 18, 0.8);
+  background-color: rgb(18, 18, 18, 0.6);
+  color: white;
   height: 48px;
   align-self: flex-end;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.icon-btn {
+  padding: 10px;
+}
+
+.icon-btn:hover {
+  cursor: pointer;
 }
