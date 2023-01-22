@@ -72,13 +72,15 @@ function PlayerFrame({
             </div>
           )}
         </div>
-        <ProgressBar
-          setTimePosition={setTimePosition}
-          videoPosition={videoPosition}
-        />
-        <div className="controls">
-          <PlayBtn isPaused={isPaused} setIsPaused={setIsPaused} />
-          <VolumeBtn setCurrentVolume={setCurrentVolume} />
+        <div className="video-controls">
+          <ProgressBar
+            setTimePosition={setTimePosition}
+            videoPosition={videoPosition}
+          />
+          <div className="controls">
+            <PlayBtn isPaused={isPaused} setIsPaused={setIsPaused} />
+            <VolumeBtn setCurrentVolume={setCurrentVolume} />
+          </div>
         </div>
       </div>
       <div className="button-container">
