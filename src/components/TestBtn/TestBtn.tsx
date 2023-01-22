@@ -1,6 +1,6 @@
-import './testbtn.css';
-import TestBtnProps from 'interfaces/TestBtnProps';
-import { useNavigate } from 'react-router-dom';
+import "./testbtn.css";
+import TestBtnProps from "interfaces/TestBtnProps";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Change to colortest page
@@ -8,10 +8,11 @@ import { useNavigate } from 'react-router-dom';
  */
 function TestBtn({}: TestBtnProps) {
   const history = useNavigate();
-  const pageTarget = '/colortest';
+  const pageTarget = "/colortest";
   return (
-    <div className="test" onClick={() => history(pageTarget)}>
-      Colortest
+    <div className="test tooltip" onClick={() => history(pageTarget)}>
+      <span className="material-symbols-outlined icon-btn">quiz</span>
+      <span className="tooltip-text">Test yourself for color vision deficiency</span>
     </div>
   );
 }
