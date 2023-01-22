@@ -1,0 +1,14 @@
+.volume-icon {
+    color: white;
+}
+
+.volume-container {
+   display: flex;
+   justify-content: center;
+   align-items: center; 
+   margin-left: 5px;
+}
+
+input:hover {
+    cursor: pointer;
+}

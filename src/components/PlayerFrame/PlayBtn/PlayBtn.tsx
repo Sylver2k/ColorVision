@@ -1,5 +1,5 @@
-import './playbtn.css';
-import PlayBtnProps from 'interfaces/PlayBtnProps';
+import "./playbtn.css";
+import PlayBtnProps from "interfaces/PlayBtnProps";
 
 /**
  * The user can pause and resume the video
@@ -9,9 +9,15 @@ import PlayBtnProps from 'interfaces/PlayBtnProps';
  */
 function PlayBtn({ isPaused, setIsPaused }: PlayBtnProps) {
   return (
-    <div className="play" onClick={() => setIsPaused(!isPaused)}>
-      {isPaused ? <p>Play</p> : <p>Pause</p>}
-    </div>
+    <>
+      <div className="play" onClick={() => setIsPaused(!isPaused)}>
+        {isPaused ? (
+          <span className="material-symbols-outlined fill-play-btn">play_arrow</span>
+        ) : (
+          <span className="material-symbols-outlined">pause</span>
+        )}
+      </div>
+    </>
   );
 }
 

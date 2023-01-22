@@ -1,3 +1,15 @@
 .play {
-  border: 1px solid red;
+  color: white;
+}
+
+.play:hover {
+  cursor: pointer;
+}
+
+.fill-play-btn {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48;
 }

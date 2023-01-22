@@ -1,5 +1,5 @@
-import './volumebtn.css';
-import VolumeBtnProps from 'interfaces/VolumeBtnProps';
+import "./volumebtn.css";
+import VolumeBtnProps from "interfaces/VolumeBtnProps";
 
 /**
  * The user can change the volume
@@ -8,13 +8,15 @@ import VolumeBtnProps from 'interfaces/VolumeBtnProps';
  */
 function VolumeBtn({ setCurrentVolume }: VolumeBtnProps) {
   return (
-    <input
-      type="range"
-      className="volume"
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-        setCurrentVolume(parseInt(event.target.value))
-      }
-    ></input>
+    <div className="volume-container">
+      <span className="material-symbols-outlined volume-icon">volume_up</span>
+      <input
+        type="range"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          setCurrentVolume(parseInt(event.target.value))
+        }
+      ></input>
+    </div>
   );
 }
 
