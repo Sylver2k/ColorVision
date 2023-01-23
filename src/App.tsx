@@ -1,7 +1,7 @@
 import "./globals.css";
 import DownloadBtn from "./components/DownloadBtn/DownloadBtn";
 import UploadBtn from "./components/UploadBtn/UploadBtn";
-import {useRef, useState} from "react";
+import { useEffect, useRef, useState} from "react";
 import "./app.css";
 import PlayerFrame from "./components/PlayerFrame/PlayerFrame";
 /**
@@ -9,6 +9,10 @@ import PlayerFrame from "./components/PlayerFrame/PlayerFrame";
  * @returns The player frame and the upload,download buttons
  */
 function App() {
+  useEffect(() => {
+    document.title = "ColorVision";
+  }, []);
+
   const [selectedFile, setSelectedFile] = useState<string>("default.mp4");
   const [colorblindFile, setColorblindFile] = useState<string>("");
   const canvasRef:any = useRef();
@@ -24,13 +28,18 @@ function App() {
 
   const useDefaultVideoOrUserInput = (selectedFile: string): string => {
     //return selectedFile === "default.mp4" ? "/Videos/default.mp4" : selectedFile;
-    return selectedFile === "default.mp4" ? '/Videos/traffic-lights.mp4' : selectedFile
+    return selectedFile === "default.mp4"
+      ? "/Videos/traffic-lights.mp4"
+      : selectedFile;
     //return selectedFile === "default.mp4" ? '/Videos/big-buck-bunny.mp4' : selectedFile
   };
 
   return (
     <div className="outer-container">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      />
       <div className="video-container">
         <PlayerFrame
           canvasRef={canvasRef}
