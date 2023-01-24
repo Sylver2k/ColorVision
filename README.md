@@ -35,3 +35,17 @@ Für den Rot-Kanal würden wir also den Rot-Wert um 56,667 % nach oben verschieb
 
 Die 2. Quelle ist eine Studie aus dem Jahre 2009 von [Machado et al.](https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html). Deren Modell basiert auf der Stufentheorie des menschlichen Farbsehens und wird aus Daten abgeleitet, die in elektrophysiologischen Studien ermittelt wurden. Das entwickelte Modell wurde durch eine experimentelle Auswertung mit Gruppen von Personen mit Farbsehschwäche und solchen mit normalem Farbsehvermögen validiert, weshalb es uns als vertrauliche Quelle für unsere Webanwendung dient.
 Das Modell unterscheidet sich von der ersten Quelle vor allem darin, dass man hier mit unterschiedlichen Schweregraden hantiert, weshalb sich hieraus die Farbschwächen verwenden. Farb-Matrixen mit dem Schweregrad 1 müssten somit Farbblindheit liefern
+
+## Verwendete Technologien
+
+Die Webanwendung wurde mit dem Framework [React](https://reactjs.org/) erstellt und in Typescript geschrieben. Für die Simulation wurde die build-in [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) verwendet
+Die React App besteht aus verschiedenen Komponenten, die alle miteinander zusammenwirken. Die Funktionalität für die Simulation findet sich beispielsweise in der `Player.tsx` Komponente wieder
+
+## Installationsanleitung
+Für die Anwendung wird [Node.js](https://nodejs.org/en/) benötigt und eine IDE
+
+1. Git Repository clonen / forken
+2. Repository in IDE öffnen
+3. Im Terminal `npm install` ausführen
+4. Nach der Installation aller Dependencies`npm run start`ausführen
+5. Die Anwendung ist nun unter [http://localhost:3000](http://localhost:3000) erreichbar
