@@ -27,8 +27,8 @@ Quelle 2: https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simul
 
 Die 1. Quelle liefert für diese Anwendung die Farb-Matrizen für die oben aufgelisteten **Farbblindheiten**. Pro Farbblindheit existiert eine 3x3 Farb-Matrix, die jeweils für jede Grundfarbe 3 Werte für Rot, Grün und Blau enthält. 
 Für die Rotblindheit (Protanopia) sieht die Matrix wie folgt aus:
-> |0.567 ⠀0.433 ⠀⠀⠀0⠀⠀|  ⠀⠀⠀=> Rot
-|0.558 ⠀0.442 ⠀⠀⠀0⠀⠀|⠀⠀  ⠀=> Grün
+> |0.567 ⠀0.433 ⠀⠀⠀0⠀⠀|  ⠀⠀⠀=> Rot  <br />
+|0.558 ⠀0.442 ⠀⠀⠀0⠀⠀|⠀⠀  ⠀=> Grün <br />
 |⠀⠀0 ⠀⠀0.242 ⠀⠀0.758| ⠀⠀⠀=> Blau
 
 Für den Rot-Kanal würden wir also den Rot-Wert um 56,667 % nach oben verschieben (von der Standardposition aus), und den Grün-Wert um 43,333 % nach oben. Da der letzte Wert Null ist, ändern wir den Blau-Wert nicht. Für den grünen & blauen Kanal sieht die Vorgehensweise ebenso aus. Diese Methode nennt sich auch _Matrix Shifting Algorithm_. 
