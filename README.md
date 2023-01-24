@@ -1,46 +1,8 @@
-# Getting Started with Create React App
+# ColorVision 🎨
+#### Ein Tool zur Simulation von Farbfehlsichtigkeit und Farbblindheit
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Das menschliche Auge ist ein echter Alleskönner! Es ist in der Lage, Formen, Farben und Bewegungen wahrzunehmen. Dabei ist das Sehen ein hochkomplexer Vorgang, bei dem nicht nur das Auge, sondern auch das Gehirn beteiligt ist. Besonders die Wahrnehmung von Farben ist eine erstaunliche Leistung. Sie beruht auf der Fähigkeit, die drei Grundfarben Rot, Grün und Blau zu unterscheiden. Alle anderen Farben mischt der Mensch aus diesen Grundfarben zusammen. Zuständig für die Farbwahrnehmung sind spezielle lichtempfindliche Zellen, sogenannte Zapfen. Sie liegen zusammen mit den Stäbchen, die für die Helligkeitswahrnehmung zuständig sind, in der Netzhaut.
+Menschen besitzen normalerweise drei verschiedene Arten von Zapfen, die auf unterschiedliche Wellenlängen reagieren - auf kurzwelliges (blaues), mittelwelliges (grünes) oder langwelliges (rotes) Licht. Deshalb liest man oft auch den Begriff LMS-Zapfen für die verschiedenen Zapfenarten. Jeder Zapfentyp ist also für eine Grundfarbe zuständig. Bei einem Teil der Bevölkerung funktionieren diese Zapfen nicht immer korrekt, dann entsteht eine Farbschwäche. Sind ein oder mehrere Zapfentypen gar nicht vorhanden, entsteht eine teilweise oder vollständige Farbenblindheit. Die beiden Begriffe "Farbfehlsichtigkeit" und "Farbblindheit" meinen somit also nicht das Gleiche. 
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Von Farbenblindheit ist etwa 1 von 12 Männern (8 %) und 1 von 200 Frauen betroffen. Weltweit gibt es schätzungsweise 300 Millionen Menschen mit Farbenblindheit, was verhältnismäßig betrachtet fast der gesamten Bevölkerung der USA entspricht! 
+###### (Quellen: [colourblindawareness](https://www.colourblindawareness.org/colour-blindness/types-of-colour-blindness/), [FOCUS](https://focus-arztsuche.de/magazin/gesundheitswissen/farbfehlsichtigkeit-und-farbenblindheit-erkennen))
