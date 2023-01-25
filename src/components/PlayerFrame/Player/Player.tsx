@@ -272,7 +272,7 @@ function Player({
         {isColorblindMode ? (
           <canvas ref={canvasRef} id="colorBlindCanvas"></canvas>
         ) : (
-          <video ref={videoRef} id="video" width={VIDEO_WIDTH} controls preload="metadata">
+          <video key={selectedFile} ref={videoRef} id="video" width={VIDEO_WIDTH} controls preload="metadata">
             <source src={selectedFile} type="video/mp4" />
           </video>
         )}
