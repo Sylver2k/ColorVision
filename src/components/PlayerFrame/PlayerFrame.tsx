@@ -1,7 +1,7 @@
 import './playerframe.css';
 import PlayerFrameProps from 'interfaces/PlayerFrameProps';
 import ProgressBar from '../ProgessBar/ProgressBar';
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 import PlayBtn from './PlayBtn/PlayBtn';
 import VolumeBtn from './VolumeBtn/VolumeBtn';
 import ViewMode from './ViewModeBtn/ViewModeBtn';
@@ -14,18 +14,20 @@ import TestBtn from '../TestBtn/TestBtn';
  * @param colorblindFile the converted file
  * @returns the complete player frame
  */
-function PlayerFrame({ selectedFile, colorblindFile }: PlayerFrameProps) {
+function PlayerFrame({ selectedFile, colorblindFile, videoRef, canvasRef }: PlayerFrameProps) {
   const [isPaused, setIsPaused] = useState<boolean>(true);
   const [isMultiView, setIsMultiView] = useState<boolean>(false);
   const [currentVolume, setCurrentVolume] = useState<number>(50);
   const [timePosition, setTimePosition] = useState<number>(0);
   const [videoPosition, setVideoPosition] = useState<number | undefined>(0);
 
-  return (
+    return (
     <div className="playerframe">
       <div className="viewcontainer">
         {!isMultiView ? (
-          <Player
+          <Player 
+            videoRef={videoRef} 
+            canvasRef={canvasRef}
             isPaused={isPaused}
             isColorblindMode={false}
             isMultiView={isMultiView}
@@ -38,6 +40,8 @@ function PlayerFrame({ selectedFile, colorblindFile }: PlayerFrameProps) {
         ) : (
           <div className="multiview-container">
             <Player
+              videoRef={videoRef}
+              canvasRef={canvasRef}
               isPaused={isPaused}
               isColorblindMode={false}
               isMultiView={isMultiView}
@@ -47,7 +51,9 @@ function PlayerFrame({ selectedFile, colorblindFile }: PlayerFrameProps) {
               timePosition={timePosition}
               setVideoPosition={setVideoPosition}
             />
-            <Player
+            <Player 
+              videoRef={videoRef}
+              canvasRef={canvasRef}
               isPaused={isPaused}
               isColorblindMode={true}
               isMultiView={isMultiView}

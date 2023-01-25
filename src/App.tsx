@@ -1,6 +1,6 @@
 import DownloadBtn from './components/DownloadBtn/DownloadBtn';
 import UploadBtn from './components/UploadBtn/UploadBtn';
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 import './app.css';
 import PlayerFrame from './components/PlayerFrame/PlayerFrame';
 /**
@@ -10,6 +10,9 @@ import PlayerFrame from './components/PlayerFrame/PlayerFrame';
 function App() {
   const [selectedFile, setSelectedFile] = useState<string>('default.mp4');
   const [colorblindFile, setColorblindFile] = useState<string>('');
+  const canvasRef:any = useRef();
+  const videoRef:any = useRef();
+
   const generateColorblindFile = (selectedFile: string): void => {
     const convertedFile = '';
     /**
@@ -22,9 +25,13 @@ function App() {
     return selectedFile === "default.mp4" ? '/Videos/default.mp4' : selectedFile
   }
 
+
+
   return (
     <div className="outer-container">
       <PlayerFrame
+        canvasRef={canvasRef}
+        videoRef={videoRef}
         selectedFile={useDefaultVideoOrUserInput(selectedFile)}
         colorblindFile={colorblindFile}
       />
@@ -38,7 +45,7 @@ function App() {
           <option value="Tritanopia">Tritanopia</option>
           <option value="Tritanomaly">Tritanomaly</option>
         </select>
-        <DownloadBtn selectedFile={selectedFile}></DownloadBtn>
+        <DownloadBtn videoRef={videoRef} canvasRef={canvasRef} selectedFile={selectedFile}></DownloadBtn>
       </div>
     </div>
   );
