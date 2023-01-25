@@ -1,3 +1,13 @@
 input[type="file"] {
   display: none;
 }
+
+.on-dragging {
+  background: repeating-linear-gradient(
+    -45deg,
+    #039BE5 0px,
+    #039BE5 20px,
+    #90CAF9 20px,
+    #90CAF9 40px
+  );
+}

@@ -32,8 +32,25 @@ function App() {
     //return selectedFile === "default.mp4" ? '/Videos/big-buck-bunny.mp4' : selectedFile
   };
 
+  const dragLeaveHandler = (event: any) => {
+    if (event.clientX === 0 && event.clientY === 0) {
+      //event got fired when the file got dragged to the outside of the browser
+      event.preventDefault();
+      document.getElementById("drop_zone")?.classList.remove("on-dragging");
+    }
+  };
+
+  const dragEnterHandler = (event: any) => {
+    event.preventDefault();
+    document.getElementById("drop_zone")?.classList.add("on-dragging");
+  };
+
   return (
-    <div className="outer-container">
+    <div
+      className="outer-container"
+      onDragLeave={(event) => dragLeaveHandler(event)}
+      onDragEnter={(event) => dragEnterHandler(event)}
+    >
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
