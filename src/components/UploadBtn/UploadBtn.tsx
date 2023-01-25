@@ -1,5 +1,6 @@
-import UploadBtnProps from 'interfaces/UploadBtnProps';
-import React from "react";
+import "./uploadbtn.css";
+import UploadBtnProps from "interfaces/UploadBtnProps";
+import { ChangeEvent } from "react";
 
 /**
  * The user can upload their own video
@@ -8,10 +9,23 @@ import React from "react";
  */
 function UploadBtn({ setSelectedFile }: UploadBtnProps) {
 
-    return (
-        <input type="file" className="button-branding" onChange={(event:any) => {setSelectedFile(URL.createObjectURL(event.target.files[0]))}}>
-        </input>
-    )
+  const uploadFile = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedFile(URL.createObjectURL(event.target.files![0]));
+  };
+
+  return (
+    <label htmlFor="file-upload" className="button-branding">
+      <input
+        type="file"
+        id="file-upload"
+        className=""
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          uploadFile(event);
+        }}
+      ></input>
+      Upload
+    </label>
+  );
 }
 
 export default UploadBtn;
