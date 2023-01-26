@@ -31,8 +31,9 @@ function DownloadBtn({ selectedFile, canvasRef, videoRef }: DownloadBtnProps) {
     }
   };
   return (
-    <div className="button-branding" onClick={() => capture()}>
+    <div className="button-branding side-tooltip" onClick={() => capture()}>
       Download
+      <span className="side-tooltip-text">Download works only in split screen mode</span>
     </div>
   );
 }
