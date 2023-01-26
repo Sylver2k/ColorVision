@@ -52,7 +52,7 @@ function UploadBtn({ setSelectedFile }: UploadBtnProps) {
         <input
           type="file"
           id="file-upload"
-          className=""
+          accept="video/*"
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             uploadFile(event);
           }}
