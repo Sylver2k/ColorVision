@@ -28,8 +28,6 @@ function App() {
 
   const useDefaultVideoOrUserInput = (selectedFile: string): string => {
     return selectedFile === "default.mp4" ? "/Videos/default.mp4" : selectedFile;
-    // return selectedFile === "default.mp4" ? "/Videos/traffic-lights.mp4" : selectedFile;
-    //return selectedFile === "default.mp4" ? '/Videos/big-buck-bunny.mp4' : selectedFile
   };
 
   const dragLeaveHandler = (event: any) => {
