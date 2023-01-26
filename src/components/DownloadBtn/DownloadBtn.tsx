@@ -12,7 +12,7 @@ function DownloadBtn({ selectedFile, canvasRef, videoRef }: DownloadBtnProps) {
     videoRef.current?.play();
     const recordedChunks:any = [];
     if(canvasRef.current){
-      const stream = canvasRef.current.captureStream(3000);
+      const stream = canvasRef.current.captureStream(30);
       const mediaRecorder = new MediaRecorder(stream,
           {mimeType: 'video/webm; codecs=vp9'});
       mediaRecorder.ondataavailable =
