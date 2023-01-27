@@ -1,0 +1,11 @@
+.result-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.ishihara-result {
+    margin-top: 10px;
+}
