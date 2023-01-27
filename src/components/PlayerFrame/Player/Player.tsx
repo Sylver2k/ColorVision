@@ -42,7 +42,7 @@ function Player({
     changeVideoPosition(timePosition);
   }, [timePosition]);
   useEffect(() => {
-    loadVariables();
+    initializeRendering();
   }, []);
   useEffect(() => {
     getVideoDuration(videoRef);
@@ -96,7 +96,7 @@ function Player({
       newCanvas.setAttribute("id", "colorBlindCanvas");
       oldCanvas?.parentNode?.replaceChild(newCanvas, oldCanvas);
       cancelAllAnimationFrames();
-      loadVariables();
+      initializeRendering();
     }
   };
 
@@ -121,7 +121,7 @@ function Player({
 
   let metaData: MetaData;
 
-  const loadVariables = (): void => {
+  const initializeRendering = (): void => {
     video = document.getElementById('video') as HTMLVideoElement;
 
     video.addEventListener('loadeddata', () => {
