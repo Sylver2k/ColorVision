@@ -22,6 +22,7 @@ function Player({
   currentVolume,
   colorblindFile,
   timePosition,
+  simulatedCVD,
   setVideoPosition,
   canvasRef,
   videoRef
@@ -46,6 +47,9 @@ function Player({
   useEffect(() => {
     getVideoDuration(videoRef);
   }, [videoRef.current?.duration]);
+  useEffect(() => {
+    handleCVDChange();
+  }, [simulatedCVD])
 
   const getVideoDuration = (
     videoRef: RefObject<HTMLVideoElement>
@@ -79,6 +83,16 @@ function Player({
     }
   };
 
+  const handleCVDChange = () => {
+    if (isColorblindMode) {
+      const oldCanvas = document.getElementById("colorBlindCanvas");
+      const newCanvas = document.createElement("canvas");
+      newCanvas.setAttribute("id", "colorBlindCanvas");
+      oldCanvas?.parentNode?.replaceChild(newCanvas, oldCanvas);
+      loadVariables();
+    }
+  };
+
   /**
    * Video-Rendering Section
    */
@@ -95,14 +109,10 @@ function Player({
   let video: HTMLVideoElement;
   let colorBlindCanvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
+
   let metaData: MetaData;
 
-  let cvd: string;
-
   const loadVariables = (): void => {
-    const selector = document.getElementById('cvd') as HTMLSelectElement;
-    cvd = selector!.options[selector.selectedIndex].text;
-
     video = document.getElementById('video') as HTMLVideoElement;
 
     video.addEventListener('loadeddata', () => {
@@ -125,16 +135,14 @@ function Player({
   };
 
   const renderVideoIntoCanvas = (): void => {
-    video.addEventListener('loadeddata', () => {
-      video.width = VIDEO_WIDTH / 2;
-      colorBlindCanvas.width = VIDEO_WIDTH / 2;
-      colorBlindCanvas.height = VIDEO_HEIGHT / 2;
-      function updateFrame() {
-        applyColorFilter();
-        requestAnimationFrame(updateFrame);
-      }
+    video.width = VIDEO_WIDTH / 2;
+    colorBlindCanvas.width = VIDEO_WIDTH / 2;
+    colorBlindCanvas.height = VIDEO_HEIGHT / 2;
+    function updateFrame() {
+      applyColorFilter();
       requestAnimationFrame(updateFrame);
-    });
+    }
+    requestAnimationFrame(updateFrame);
   };
 
   /**
@@ -240,7 +248,7 @@ function Player({
     );
 
     const data = imageData.data;
-    const colormatrix = getColorMatrixForBlindness(cvd);
+    const colormatrix = getColorMatrixForBlindness(simulatedCVD);
 
     for (let i = 0; i < data.length; i += 4) {
       let red = data[i],

@@ -8,6 +8,7 @@ interface PlayerProps {
   currentVolume: number;
   colorblindFile: string;
   timePosition: number;
+  simulatedCVD: string;
   setVideoPosition: Dispatch<SetStateAction<number | undefined>>;
   canvasRef:RefObject<HTMLCanvasElement>;
   videoRef: RefObject<HTMLVideoElement>;

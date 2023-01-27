@@ -17,6 +17,7 @@ import TestBtn from "../TestBtn/TestBtn";
 function PlayerFrame({
   selectedFile,
   colorblindFile,
+  cvd,
   videoRef,
   canvasRef,
 }: PlayerFrameProps) {
@@ -41,6 +42,7 @@ function PlayerFrame({
               currentVolume={currentVolume}
               colorblindFile={colorblindFile}
               timePosition={timePosition}
+              simulatedCVD={cvd}
               setVideoPosition={setVideoPosition}
             />
           ) : (
@@ -55,6 +57,7 @@ function PlayerFrame({
                 currentVolume={currentVolume}
                 colorblindFile={colorblindFile}
                 timePosition={timePosition}
+                simulatedCVD={cvd}
                 setVideoPosition={setVideoPosition}
               />
               <Player
@@ -67,6 +70,7 @@ function PlayerFrame({
                 currentVolume={currentVolume}
                 colorblindFile={colorblindFile}
                 timePosition={timePosition}
+                simulatedCVD={cvd}
                 setVideoPosition={setVideoPosition}
               />
             </div>

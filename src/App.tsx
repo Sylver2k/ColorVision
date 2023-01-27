@@ -14,6 +14,7 @@ function App() {
   }, []);
 
   const [selectedFile, setSelectedFile] = useState<string>("default.mp4");
+  const [selectedCvd, setSelectedCVD] = useState<string>("Protanopia");
   const [colorblindFile, setColorblindFile] = useState<string>("");
   const canvasRef:any = useRef();
   const videoRef:any = useRef();
@@ -59,11 +60,12 @@ function App() {
         videoRef={videoRef}
         selectedFile={useDefaultVideoOrUserInput(selectedFile)}
           colorblindFile={colorblindFile}
+          cvd={selectedCvd}
         />
       </div>
       <div className="interaction-container">
         <UploadBtn setSelectedFile={setSelectedFile}></UploadBtn>
-        <select name="cvdselector" id="cvd" className="select-cvd">
+        <select name="cvdselector" id="cvd" className="select-cvd" onChange={(event) => setSelectedCVD(event.target.value)}>
           <option value="Protanopia">Protanopia</option>
           <option value="Protanomaly">Protanomaly</option>
           <option value="Deuteranopia">Deuteranopia</option>
