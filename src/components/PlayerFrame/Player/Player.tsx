@@ -23,11 +23,13 @@ function Player({
   colorblindFile,
   timePosition,
   setVideoPosition,
+  canvasRef,
+  videoRef
 }: PlayerProps) {
   /**
    * TODO: Don't trigger on mount
    */
-  const videoRef = useRef<HTMLVideoElement>(null);
+  //const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     pauseVideo();
@@ -52,7 +54,7 @@ function Player({
       return videoRef.current?.duration;
     }
   };
-
+  
   const pauseVideo = (): void => {
     if (videoRef.current) {
       if (videoRef.current.paused) {
@@ -264,7 +266,7 @@ function Player({
     <div className={`${isMultiView ? 'player multiview' : 'player'}`}>
       <div>
         {isColorblindMode ? (
-          <canvas id="colorBlindCanvas"></canvas>
+          <canvas ref={canvasRef} id="colorBlindCanvas"></canvas>
         ) : (
           <video ref={videoRef} id="video" controls preload="metadata">
             <source src={selectedFile} type="video/mp4" />
