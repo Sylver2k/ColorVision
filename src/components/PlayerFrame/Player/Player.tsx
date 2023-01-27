@@ -41,8 +41,11 @@ function Player({
     getVideoDuration(videoRef);
   }, [videoRef.current?.duration]);
   useEffect(() => {
-    handleCVDChange();
+    handleRerendering();
   }, [simulatedCVD]);
+  useEffect(() => {
+    handleNewFile();
+  }, [selectedFile])
 
   /**
    * Get the duration of the video
@@ -92,7 +95,7 @@ function Player({
   /**
    * Rerender canvas to mirror filter changes
    */
-  const handleCVDChange = (): void => {
+  const handleRerendering = (): void => {
     if (isColorblindMode) {
       canvasRef.current?.parentNode?.replaceChild(
         canvasRef.current,
@@ -103,6 +106,14 @@ function Player({
       initializeRendering();
     }
   };
+
+  const handleNewFile = ()  => {
+    if(isMultiView) {
+      videoRef.current!.width = VIDEO_WIDTH / 2;
+      videoRef.current!.height = VIDEO_HEIGHT / 2;
+      handleRerendering();
+    }
+  }
 
   /**
    * Video-Rendering Section
