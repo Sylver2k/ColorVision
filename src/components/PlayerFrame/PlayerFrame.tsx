@@ -1,7 +1,7 @@
 import "./playerframe.css";
 import PlayerFrameProps from "interfaces/PlayerFrameProps";
 import ProgressBar from "../ProgessBar/ProgressBar";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import PlayBtn from "./PlayBtn/PlayBtn";
 import VolumeBtn from "./VolumeBtn/VolumeBtn";
 import ViewMode from "./ViewModeBtn/ViewModeBtn";
@@ -82,7 +82,7 @@ function PlayerFrame({
             videoPosition={videoPosition}
           />
           <div className="controls">
-            <PlayBtn isPaused={isPaused} setIsPaused={setIsPaused} />
+            <PlayBtn videoReference={videoRef} />
             <VolumeBtn setCurrentVolume={setCurrentVolume} />
           </div>
         </div>

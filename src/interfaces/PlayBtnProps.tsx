@@ -1,6 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
+import { RefObject} from 'react';
 interface PlayBtnProps {
-  isPaused: boolean;
-  setIsPaused: Dispatch<SetStateAction<boolean>>;
+  videoReference: RefObject<HTMLVideoElement>;
 }
 export default PlayBtnProps;

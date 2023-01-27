@@ -1,6 +1,6 @@
 import './player.css';
 import PlayerProps from 'interfaces/PlayerProps';
-import { RefObject, useEffect } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
 /**
  * Put here all the video logic except converting for colorblind
@@ -30,11 +30,7 @@ function Player({
   /**
    * TODO: Don't trigger on mount
    */
-  //const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    pauseVideo();
-  }, [isPaused]);
   useEffect(() => {
     changeVideoVolume(currentVolume);
   }, [currentVolume]);
@@ -58,16 +54,7 @@ function Player({
       return videoRef.current?.duration;
     }
   };
-  
-  const pauseVideo = (): void => {
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-      } else {
-        videoRef.current.pause();
-      }
-    }
-  };
+
   const changeVideoVolume = (currentVolume: number): void => {
     if (videoRef.current) {
       videoRef.current.volume = currentVolume / 100;
@@ -92,7 +79,7 @@ function Player({
   const handleCVDChange = () => {
     if (isColorblindMode) {
       const oldCanvas = document.getElementById("colorBlindCanvas");
-      oldCanvas?.parentNode?.replaceChild(oldCanvas, oldCanvas); // force canvas to re-render to mirror pixel changes
+      oldCanvas?.parentNode?.replaceChild(oldCanvas, oldCanvas); // force canvas to re-render to mirror cvd changes
       cancelAllAnimationFrames();
       initializeRendering();
     }
