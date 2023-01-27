@@ -1,16 +1,44 @@
-.ishihara-picture {
-  border: 1px solid red;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 800px;
-  height: 800px;
-  margin-top: 50px;
-}
+
+
 .ishihara-container {
-  width: 100vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.ishihara-tutorialframe{
   display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative;
+  flex-direction: column;
+  width: 600px;
+}
+.ishihara-header{
+  text-align: center;
+}
+.ishihara-tutorial{
+margin-top: 20px;
+font-size: 18px;
+}
+.ishihara-controls {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.ishihara-input {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.next-btn {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
 }

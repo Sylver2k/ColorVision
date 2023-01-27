@@ -1,0 +1,57 @@
+[
+    
+    {
+      "id": 1,
+      "solution": 8,
+      "matches": 3,
+      "type": "Protanomaly"
+    },
+    {
+      "id": 2,
+      "solution": 29,
+      "matches": 70,
+      "type": "Protanomaly"
+    },
+    {
+      "id": 3,
+      "solution": 5,
+      "matches": 2,
+      "type": "Protanomaly"
+    },
+    {
+      "id": 4,
+      "solution": 3,
+      "matches": 5,
+      "type": "Protanomaly"
+    },
+    {
+      "id": 5,
+      "solution": 15,
+      "matches": 17,
+      "type": "Protanomaly"
+    },
+    {
+      "id": 6,
+      "solution": 74,
+      "matches": 21,
+      "type": "Protanomaly"
+    },
+    {
+      "id": 7,
+      "solution": 26,
+      "matches": [6, 2],
+      "type": ["Protanopia", "Deuteranopia"]
+    },
+    {
+      "id": 8,
+      "solution": 42,
+      "matches": [2, 4],
+      "type": ["Protanopia", "Deuteranopia"]
+    },
+    {
+      "id": 9,
+      "solution": -1,
+      "matches": 5,
+      "type": ["Protanopia", "Deuteranopia"]
+    }
+  ]
