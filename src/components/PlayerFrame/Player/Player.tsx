@@ -83,12 +83,19 @@ function Player({
     }
   };
 
+  const cancelAllAnimationFrames = () => {
+    requestedAnimationFramesIDs.forEach(id => {
+      window.cancelAnimationFrame(id);
+    });
+  }
+
   const handleCVDChange = () => {
     if (isColorblindMode) {
       const oldCanvas = document.getElementById("colorBlindCanvas");
       const newCanvas = document.createElement("canvas");
       newCanvas.setAttribute("id", "colorBlindCanvas");
       oldCanvas?.parentNode?.replaceChild(newCanvas, oldCanvas);
+      cancelAllAnimationFrames();
       loadVariables();
     }
   };
@@ -109,6 +116,8 @@ function Player({
   let video: HTMLVideoElement;
   let colorBlindCanvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
+
+  let requestedAnimationFramesIDs: number[] = []
 
   let metaData: MetaData;
 
@@ -140,9 +149,11 @@ function Player({
     colorBlindCanvas.height = VIDEO_HEIGHT / 2;
     function updateFrame() {
       applyColorFilter();
-      requestAnimationFrame(updateFrame);
+      const requestID = requestAnimationFrame(updateFrame);
+      requestedAnimationFramesIDs.push(requestID);
     }
-    requestAnimationFrame(updateFrame);
+    const initialRequestID = requestAnimationFrame(updateFrame);
+    requestedAnimationFramesIDs.push(initialRequestID);
   };
 
   /**
