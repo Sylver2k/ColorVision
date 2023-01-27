@@ -1,6 +1,6 @@
 import './player.css';
 import PlayerProps from 'interfaces/PlayerProps';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect } from 'react';
 
 /**
  * Put here all the video logic except converting for colorblind
@@ -92,9 +92,7 @@ function Player({
   const handleCVDChange = () => {
     if (isColorblindMode) {
       const oldCanvas = document.getElementById("colorBlindCanvas");
-      const newCanvas = document.createElement("canvas");
-      newCanvas.setAttribute("id", "colorBlindCanvas");
-      oldCanvas?.parentNode?.replaceChild(newCanvas, oldCanvas);
+      oldCanvas?.parentNode?.replaceChild(oldCanvas, oldCanvas); // force canvas to re-render to mirror pixel changes
       cancelAllAnimationFrames();
       initializeRendering();
     }
