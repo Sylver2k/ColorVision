@@ -1,23 +1,24 @@
-
-
 .ishihara-container {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 20px;
+  width: 50%;
+  background-color: white;
 }
-.ishihara-tutorialframe{
+.ishihara-tutorialframe {
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 600px;
+  height: 100px;
 }
-.ishihara-header{
+.ishihara-header {
   text-align: center;
 }
-.ishihara-tutorial{
-margin-top: 20px;
-font-size: 18px;
+.ishihara-tutorial {
+  font-family: calibri;
+  margin-top: 20px;
+  font-size: 18px;
 }
 .ishihara-controls {
   display: flex;
@@ -41,4 +42,31 @@ font-size: 18px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 10px;
+}
+
+.page-container {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #121212;
+}
+
+.close-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.close-test-btn {
+  all: unset;
+}
+
+.close-test-btn:hover {
+  cursor: pointer;
+}
+
+#close-icon {
+  font-size: 35px;
+  margin: 5px;
 }
