@@ -7,9 +7,50 @@
 .outer-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
-.files {
+
+.video-container {
+  width: 100%;
+  background-color: black;
+  height: 69%;
+}
+
+.interaction-container {
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 20%;
+  background-color: #121212;
+  z-index: 0;
+}
+
+.name-banner {
+  font-family: Garamond ;
+  font-weight: bold;
+  font-size: x-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+  background: rgb(143,115,58);
+  background: linear-gradient(135deg, rgba(143,115,58,1) 6%, rgba(255,255,255,1) 6%, rgba(255,255,255,1) 93%, rgba(143,115,58,1) 93%);
+}
+
+.select-cvd {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  background-color: rgb(255, 255, 255);
+  height: 40px;
+  width: 200px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
 }

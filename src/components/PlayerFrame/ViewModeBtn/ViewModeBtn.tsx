@@ -1,5 +1,5 @@
-import './viewmodebtn.css';
-import ViewModeProps from 'interfaces/ViewModeBtnProps';
+import "./viewmodebtn.css";
+import ViewModeProps from "interfaces/ViewModeBtnProps";
 
 /**
  * The user can decide between two viewmodes
@@ -9,8 +9,9 @@ import ViewModeProps from 'interfaces/ViewModeBtnProps';
  */
 function ViewMode({ isMultiView, setIsMultiView }: ViewModeProps) {
   return (
-    <div className="view-mode" onClick={() => setIsMultiView(!isMultiView)}>
-      View mode
+    <div className="view-mode tooltip" onClick={() => setIsMultiView(!isMultiView)}>
+      <span className="material-symbols-outlined icon-btn">swap_horiz</span>
+      <span className="tooltip-text">Switch between the view modes</span>
     </div>
   );
 }

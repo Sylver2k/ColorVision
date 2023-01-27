@@ -1,19 +1,42 @@
-.playerframe {
-  display: flex;
-  flex-direction: column;
-  width: 1200px;
+.playercontainer {
+  display: flex; 
+  width: 100%;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
 }
 .multiview-container {
   display: flex;
-  width: 1080px;
+  width: 100%;
 }
-.viewcontainer {
+.playerframe {
   display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  width: 57%;
+  z-index: 1;
 }
 .controls {
   display: flex;
-  margin-top: 20px;
+  justify-content: center;
+  align-items: center; 
+}
+.button-container {
+  display: flex;
+  width: 0;
+  height: 83%;
+  z-index: 2;
+  position: relative;
+  top: 257px;
+  right: 62px;
+}
+
+.video-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 10%;
+  background-color: #121212;
+  z-index: 2;
+  width: 100vw;
 }

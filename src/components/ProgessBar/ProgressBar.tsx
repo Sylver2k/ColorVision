@@ -9,7 +9,7 @@ import ProgressBarProps from 'interfaces/ProgressBarProps';
  */
 function ProgressBar({ setTimePosition, videoPosition }: ProgressBarProps) {
   return (
-    <div className="placeholer">
+    <div>
       <input
         type="range"
         className="progressbar"

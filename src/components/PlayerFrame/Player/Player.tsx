@@ -1,6 +1,6 @@
 import './player.css';
 import PlayerProps from 'interfaces/PlayerProps';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
 /**
  * Put here all the video logic except converting for colorblind
@@ -22,6 +22,7 @@ function Player({
   currentVolume,
   colorblindFile,
   timePosition,
+  simulatedCVD,
   setVideoPosition,
   canvasRef,
   videoRef
@@ -29,11 +30,7 @@ function Player({
   /**
    * TODO: Don't trigger on mount
    */
-  //const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    pauseVideo();
-  }, [isPaused]);
   useEffect(() => {
     changeVideoVolume(currentVolume);
   }, [currentVolume]);
@@ -41,11 +38,14 @@ function Player({
     changeVideoPosition(timePosition);
   }, [timePosition]);
   useEffect(() => {
-    loadVariables();
+    initializeRendering();
   }, []);
   useEffect(() => {
     getVideoDuration(videoRef);
   }, [videoRef.current?.duration]);
+  useEffect(() => {
+    handleCVDChange();
+  }, [simulatedCVD])
 
   const getVideoDuration = (
     videoRef: RefObject<HTMLVideoElement>
@@ -54,16 +54,7 @@ function Player({
       return videoRef.current?.duration;
     }
   };
-  
-  const pauseVideo = (): void => {
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-      } else {
-        videoRef.current.pause();
-      }
-    }
-  };
+
   const changeVideoVolume = (currentVolume: number): void => {
     if (videoRef.current) {
       videoRef.current.volume = currentVolume / 100;
@@ -79,9 +70,28 @@ function Player({
     }
   };
 
+  const cancelAllAnimationFrames = () => {
+    requestedAnimationFramesIDs.forEach(id => {
+      window.cancelAnimationFrame(id);
+    });
+  }
+
+  const handleCVDChange = () => {
+    if (isColorblindMode) {
+      const oldCanvas = document.getElementById("colorBlindCanvas");
+      oldCanvas?.parentNode?.replaceChild(oldCanvas, oldCanvas); // force canvas to re-render to mirror cvd changes
+      cancelAllAnimationFrames();
+      initializeRendering();
+    }
+  };
+
   /**
    * Video-Rendering Section
    */
+
+  const VIDEO_WIDTH = 1100;
+  const VIDEO_HEIGHT = 619;
+
 
   interface MetaData {
     videoWidth: HTMLVideoElement['videoWidth'];
@@ -91,14 +101,12 @@ function Player({
   let video: HTMLVideoElement;
   let colorBlindCanvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
+
+  let requestedAnimationFramesIDs: number[] = []
+
   let metaData: MetaData;
 
-  let cvd: string;
-
-  const loadVariables = (): void => {
-    const selector = document.getElementById('cvd') as HTMLSelectElement;
-    cvd = selector!.options[selector.selectedIndex].text;
-
+  const initializeRendering = (): void => {
     video = document.getElementById('video') as HTMLVideoElement;
 
     video.addEventListener('loadeddata', () => {
@@ -121,16 +129,16 @@ function Player({
   };
 
   const renderVideoIntoCanvas = (): void => {
-    video.addEventListener('loadeddata', () => {
-      video.width = metaData.videoWidth / 2;
-      colorBlindCanvas.width = metaData.videoWidth / 2;
-      colorBlindCanvas.height = metaData.videoHeight / 2;
-      function updateFrame() {
-        applyColorFilter();
-        requestAnimationFrame(updateFrame);
-      }
-      requestAnimationFrame(updateFrame);
-    });
+    video.width = VIDEO_WIDTH / 2;
+    colorBlindCanvas.width = VIDEO_WIDTH / 2;
+    colorBlindCanvas.height = VIDEO_HEIGHT / 2;
+    function updateFrame() {
+      applyColorFilter();
+      const requestID = requestAnimationFrame(updateFrame);
+      requestedAnimationFramesIDs.push(requestID);
+    }
+    const initialRequestID = requestAnimationFrame(updateFrame);
+    requestedAnimationFramesIDs.push(initialRequestID);
   };
 
   /**
@@ -201,29 +209,6 @@ function Player({
     }
   };
 
-  const applytestEffectSepia = (imageData: ImageData): void => {
-    const data = imageData.data;
-    for (let i = 0; i < data.length; i += 4) {
-      let red = data[i],
-        green = data[i + 1],
-        blue = data[i + 2];
-
-      data[i] = Math.min(
-        Math.round(0.393 * red + 0.769 * green + 0.189 * blue),
-        255
-      );
-      data[i + 1] = Math.min(
-        Math.round(0.349 * red + 0.686 * green + 0.168 * blue),
-        255
-      );
-      data[i + 2] = Math.min(
-        Math.round(0.272 * red + 0.534 * green + 0.131 * blue),
-        255
-      );
-    }
-    ctx.putImageData(imageData, 0, 0);
-  };
-
   //TODO fix resize artefakt am anfang
 
   const applyColorFilter = (): void => {
@@ -236,7 +221,7 @@ function Player({
     );
 
     const data = imageData.data;
-    const colormatrix = getColorMatrixForBlindness(cvd);
+    const colormatrix = getColorMatrixForBlindness(simulatedCVD);
 
     for (let i = 0; i < data.length; i += 4) {
       let red = data[i],
@@ -268,7 +253,7 @@ function Player({
         {isColorblindMode ? (
           <canvas ref={canvasRef} id="colorBlindCanvas"></canvas>
         ) : (
-          <video ref={videoRef} id="video" controls preload="metadata">
+          <video key={selectedFile} ref={videoRef} id="video" width={VIDEO_WIDTH} controls preload="metadata">
             <source src={selectedFile} type="video/mp4" />
           </video>
         )}
