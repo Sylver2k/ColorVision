@@ -2,6 +2,11 @@ import ResultAreaProps from "interfaces/ResultAreaProps";
 import SimulateBtn from "./SimulateBtn/SimulateBtn";
 import "./resultarea.css";
 function ResultArea({ blindness }: ResultAreaProps) {
+  /**
+   *
+   * @param blindness array of color deficiencies
+   * @returns the feedback text the user will see
+   */
   const getUserResult = (blindness: string[]): string => {
     if (blindness.length < 1) {
       return "Your color sight seems fine.";
@@ -13,7 +18,7 @@ function ResultArea({ blindness }: ResultAreaProps) {
       );
     } else {
       if (blindness instanceof Array) {
-        let blindnessTypes = "";
+        let blindnessTypes: string = "";
         blindness.map((elm) => {
           blindnessTypes += elm + " ";
         });
