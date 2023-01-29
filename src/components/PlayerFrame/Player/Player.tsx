@@ -272,7 +272,6 @@ function Player({
             ref={videoRef}
             id="video"
             width={VIDEO_WIDTH}
-            controls
             preload="metadata"
           >
             <source src={selectedFile} type="video/mp4" />
