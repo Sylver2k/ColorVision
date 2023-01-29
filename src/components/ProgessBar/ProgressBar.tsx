@@ -1,5 +1,5 @@
-import './progressbar.css';
-import ProgressBarProps from 'interfaces/ProgressBarProps';
+import "./progressbar.css";
+import ProgressBarProps from "interfaces/ProgressBarProps";
 
 /**
  * The user can change the video position (time)

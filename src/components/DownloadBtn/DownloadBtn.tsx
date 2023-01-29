@@ -1,40 +1,56 @@
-import './downloadbtn.css';
-import DownloadBtnProps from 'interfaces/DownloadBtnProps';
+import "./downloadbtn.css";
+import DownloadBtnProps from "interfaces/DownloadBtnProps";
+import { useRef } from "react";
 
 /**
  * The user can download the video
- * @param selectedFile default or uploaded file
- * @returns a button to download the file
+ * @param canvasRef a reference to the canvas from where to download the video
+ * @param videoRef a reference to the video
+ * @returns the button to download the filtered video
  */
-function DownloadBtn({ selectedFile, canvasRef, videoRef }: DownloadBtnProps) {
-  const capture = () => {
+function DownloadBtn({ canvasRef, videoRef }: DownloadBtnProps) {
+  const anchorRef = useRef<HTMLAnchorElement>(null);
+  /**
+   * Reads a stream from the canvas, saves is as webm file and downloads its
+   */
+  const capture = (): void => {
     videoRef.current!.currentTime = 0;
     videoRef.current?.play();
-    const recordedChunks:any = [];
-    if(canvasRef.current){
-      const stream = canvasRef.current.captureStream(30);
-      const mediaRecorder = new MediaRecorder(stream,
-          {mimeType: 'video/webm; codecs=vp9'});
-      mediaRecorder.ondataavailable =
-          event => recordedChunks.push(event.data);
+    const recordedChunks: Blob[] = [];
+    if (canvasRef.current) {
+      const stream: MediaStream = canvasRef.current.captureStream(30);
+      const mediaRecorder: MediaRecorder = new MediaRecorder(stream, {
+        mimeType: "video/webm; codecs=vp9",
+      });
+      mediaRecorder.ondataavailable = (event: BlobEvent) =>
+        recordedChunks.push(event.data);
       mediaRecorder.onstop = () => {
-        const url = URL.createObjectURL(
-            new Blob(recordedChunks, {type: "video/webm"}));
-        const anchor = document.createElement("a");
-        anchor.href = url;
-        anchor.download = "video.webm";
-        anchor.click();
+        const url: string = URL.createObjectURL(
+          new Blob(recordedChunks, { type: "video/webm" })
+        );
+        if (anchorRef.current) {
+          anchorRef.current.href = url;
+          anchorRef.current.download = "video.webm";
+          anchorRef.current.click();
+        }
         window.URL.revokeObjectURL(url);
-      }
+      };
       mediaRecorder.start();
-      window.setTimeout(() => {mediaRecorder.stop();}, videoRef.current!.duration*1000);
+      window.setTimeout(() => {
+        mediaRecorder.stop();
+      }, videoRef.current!.duration * 1000);
     }
   };
   return (
-    <div className="button-branding side-tooltip" onClick={() => capture()}>
-      Download
-      <span className="side-tooltip-text">Download works only in split screen mode</span>
-    </div>
+    <>
+      <div className="button-branding side-tooltip" onClick={capture}>
+        Download
+        <span className="side-tooltip-text">
+          Download works only in split screen mode
+        </span>
+      </div>
+      <a className="download" ref={anchorRef}></a>
+    </>
   );
 }
 

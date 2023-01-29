@@ -1,34 +1,29 @@
 import "./uploadbtn.css";
 import UploadBtnProps from "interfaces/UploadBtnProps";
-import { ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 
 /**
  * The user can upload their own video
  * @param setSelectedFile sets the state when  files were uploaded
  * @returns upload button
  */
-function UploadBtn({ setSelectedFile }: UploadBtnProps) {
+function UploadBtn({ setSelectedFile, dropzoneRef }: UploadBtnProps) {
   const uploadFile = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(URL.createObjectURL(event.target.files![0]));
   };
 
   const dropHandler = (event: any) => {
     event.preventDefault();
-    const dropArea = document.getElementById("drop_zone");
-    dropArea!.classList.remove("on-dragging");
-
+    dropzoneRef.current?.classList.remove("on-dragging");
     if (event.dataTransfer.items) {
-      [...event.dataTransfer.items].forEach((item) => {
-        if (item.kind === 'file') {
-          const file = item.getAsFile();
-          console.log(`Filename: ${file.name}`);
-          console.log("File", file)
-          if(file.type.includes("video/")) {
+      [...event.dataTransfer.items].forEach((item: any) => {
+        if (item.kind === "file") {
+          const file: any = item.getAsFile();
+          if (file.type.includes("video/")) {
             setSelectedFile(URL.createObjectURL(file));
           } else {
-            console.log("Not a valid video file")
+            console.log("Not a valid video file");
           }
-          
         }
       });
     } else {
@@ -36,10 +31,9 @@ function UploadBtn({ setSelectedFile }: UploadBtnProps) {
         console.log(`Filename: ${file.name}`);
       });
     }
-
   };
 
-  const dragOverHandler = (event: any) => {
+  const dragOverHandler = (event: React.DragEvent) => {
     event.preventDefault();
   };
 
@@ -48,7 +42,12 @@ function UploadBtn({ setSelectedFile }: UploadBtnProps) {
       onDrop={(event) => dropHandler(event)}
       onDragOver={(event) => dragOverHandler(event)}
     >
-      <label id="drop_zone" htmlFor="file-upload" className="button-branding">
+      <label
+        id="drop_zone"
+        htmlFor="file-upload"
+        className="button-branding"
+        ref={dropzoneRef}
+      >
         <input
           type="file"
           id="file-upload"

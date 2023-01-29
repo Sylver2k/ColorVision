@@ -1,36 +1,33 @@
-import './player.css';
-import PlayerProps from 'interfaces/PlayerProps';
-import { RefObject, useEffect, useRef } from 'react';
+import "./player.css";
+import PlayerProps from "interfaces/PlayerProps";
+import { RefObject, useEffect, useRef } from "react";
+import colorfilters from "./colorfilters.json";
 
 /**
  * Put here all the video logic except converting for colorblind
- * @param isPaused if the video is in pause mode
  * @param isColorblindMode if the player should be in colorblind mode
  * @param isMultiView if multiview is active
  * @param selectedFile default or uploaded file
  * @param currentVolume the current volume
- * @param colorblindFile the converted file
  * @param timePosition current timestamp of the video
- * @param setVideoPosition sets the video position to pass to progress bar later
+ * @param simulatedCVD the selected color filter
+ * @param canvasRef a reference to the canvas
+ * @param videoRef a reference to the video
  * @returns one or two player
  */
 function Player({
-  isPaused,
   isColorblindMode,
   isMultiView,
   selectedFile,
   currentVolume,
-  colorblindFile,
   timePosition,
   simulatedCVD,
-  setVideoPosition,
   canvasRef,
-  videoRef
+  videoRef,
 }: PlayerProps) {
   /**
-   * TODO: Don't trigger on mount
+   * Use effects will be triggered when dependency array changes individually
    */
-
   useEffect(() => {
     changeVideoVolume(currentVolume);
   }, [currentVolume]);
@@ -45,8 +42,13 @@ function Player({
   }, [videoRef.current?.duration]);
   useEffect(() => {
     handleCVDChange();
-  }, [simulatedCVD])
+  }, [simulatedCVD]);
 
+  /**
+   * Get the duration of the video
+   * @param videoRef reference to the video
+   * @returns duration of the video
+   */
   const getVideoDuration = (
     videoRef: RefObject<HTMLVideoElement>
   ): number | undefined => {
@@ -55,12 +57,20 @@ function Player({
     }
   };
 
+  /**
+   * Changes the video volume
+   * @param currentVolume selected volume from the slider
+   */
   const changeVideoVolume = (currentVolume: number): void => {
     if (videoRef.current) {
       videoRef.current.volume = currentVolume / 100;
     }
   };
 
+  /**
+   * The user can drag the progress bar to a video position
+   * @param timePosition selected position of the slider
+   */
   const changeVideoPosition = (timePosition: number): void => {
     if (videoRef.current) {
       const duration = getVideoDuration(videoRef);
@@ -70,16 +80,25 @@ function Player({
     }
   };
 
-  const cancelAllAnimationFrames = () => {
-    requestedAnimationFramesIDs.forEach(id => {
+  /**
+   * Cancels the animation frames
+   */
+  const cancelAllAnimationFrames = (): void => {
+    requestedAnimationFramesIDs.forEach((id) => {
       window.cancelAnimationFrame(id);
     });
-  }
+  };
 
-  const handleCVDChange = () => {
+  /**
+   * Rerender canvas to mirror filter changes
+   */
+  const handleCVDChange = (): void => {
     if (isColorblindMode) {
-      const oldCanvas = document.getElementById("colorBlindCanvas");
-      oldCanvas?.parentNode?.replaceChild(oldCanvas, oldCanvas); // force canvas to re-render to mirror cvd changes
+      canvasRef.current?.parentNode?.replaceChild(
+        canvasRef.current,
+        canvasRef.current
+      );
+      // force canvas to re-render to mirror cvd changes
       cancelAllAnimationFrames();
       initializeRendering();
     }
@@ -89,27 +108,28 @@ function Player({
    * Video-Rendering Section
    */
 
-  const VIDEO_WIDTH = 1100;
-  const VIDEO_HEIGHT = 619;
-
+  const VIDEO_WIDTH: number = 1100;
+  const VIDEO_HEIGHT: number = 619;
 
   interface MetaData {
-    videoWidth: HTMLVideoElement['videoWidth'];
-    videoHeight: HTMLVideoElement['videoHeight'];
+    videoWidth: HTMLVideoElement["videoWidth"];
+    videoHeight: HTMLVideoElement["videoHeight"];
   }
 
   let video: HTMLVideoElement;
-  let colorBlindCanvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
 
-  let requestedAnimationFramesIDs: number[] = []
+  let requestedAnimationFramesIDs: number[] = [];
 
   let metaData: MetaData;
 
+  /**
+   * Renders video into the canvas and applies the color filter
+   */
   const initializeRendering = (): void => {
-    video = document.getElementById('video') as HTMLVideoElement;
+    video = document.getElementById("video") as HTMLVideoElement;
 
-    video.addEventListener('loadeddata', () => {
+    video.addEventListener("loadeddata", () => {
       metaData = {
         videoWidth: video.videoWidth,
         videoHeight: video.videoHeight,
@@ -117,10 +137,7 @@ function Player({
     });
 
     if (isColorblindMode) {
-      colorBlindCanvas = document.getElementById(
-        'colorBlindCanvas'
-      ) as HTMLCanvasElement;
-      ctx = colorBlindCanvas.getContext('2d', {
+      ctx = canvasRef.current?.getContext("2d", {
         willReadFrequently: true,
       }) as CanvasRenderingContext2D;
       renderVideoIntoCanvas();
@@ -128,132 +145,125 @@ function Player({
     }
   };
 
+  /**
+   * Updates each frame with the filtering
+   */
   const renderVideoIntoCanvas = (): void => {
     video.width = VIDEO_WIDTH / 2;
-    colorBlindCanvas.width = VIDEO_WIDTH / 2;
-    colorBlindCanvas.height = VIDEO_HEIGHT / 2;
+    if (canvasRef.current) {
+      canvasRef.current.width = VIDEO_WIDTH / 2;
+      canvasRef.current.height = VIDEO_HEIGHT / 2;
+    }
+
     function updateFrame() {
       applyColorFilter();
-      const requestID = requestAnimationFrame(updateFrame);
+      const requestID: number = requestAnimationFrame(updateFrame);
       requestedAnimationFramesIDs.push(requestID);
     }
-    const initialRequestID = requestAnimationFrame(updateFrame);
+    const initialRequestID: number = requestAnimationFrame(updateFrame);
     requestedAnimationFramesIDs.push(initialRequestID);
   };
 
   /**
-   * Colorblind Simulation Section
+   * Defines the colorfilters json
    */
-
   interface ColorMatrix {
     red: number[];
     green: number[];
     blue: number[];
   }
 
-  const protanopia = {
-    red: [0.567, 0.433, 0],
-    green: [0.558, 0.442, 0],
-    blue: [0, 0.242, 0.758],
-  };
-
-  const protanomaly = {
-    // Severity = 1
-    red: [0.152286, 1.052583, -0.204868],
-    green: [0.114503, 0.786281, 0.099216],
-    blue: [-0.003882, -0.048116, 1.051998],
-  };
-
-  const deuteranopia = {
-    red: [0.625, 0.375, 0],
-    green: [0.7, 0.3, 0],
-    blue: [0, 0.3, 0.7],
-  };
-
-  const deuteranomaly = {
-    // Severity 1
-    red: [0.367322, 0.860646, -0.227968],
-    green: [0.280085, 0.672501, 0.047413],
-    blue: [-0.01182, 0.04294, 0.968881],
-  };
-
-  const tritanopia = {
-    red: [0.95, 0.05, 0],
-    green: [0, 0.433, 0.567],
-    blue: [0, 0.475, 0.525],
-  };
-
-  const tritanomaly = {
-    // Severtity = 1
-    red: [1.255528, -0.076749, -0.178779],
-    green: [-0.078411, 0.930809, 0.147602],
-    blue: [0.004733, 0.691367, 0.3039],
-  };
-
-  const getColorMatrixForBlindness = (blindness: string): ColorMatrix => {
+  /**
+   * Returns the corresponding filter for the color deficiency
+   * @param blindness selected filtering
+   * @param colorfilters colorfilters in json
+   * @returns
+   */
+  const getColorMatrixForBlindness = (
+    blindness: string,
+    colorfilters: ColorMatrix[]
+  ): ColorMatrix => {
     switch (blindness) {
-      case 'Protanopia':
-        return protanopia;
-      case 'Protanomaly':
-        return protanomaly;
-      case 'Deuteranopia':
-        return deuteranopia;
-      case 'Deuteranomaly':
-        return deuteranomaly;
-      case 'Tritanopia':
-        return tritanopia;
-      case 'Tritanomaly':
-        return tritanomaly;
+      case "Protanopia":
+        return colorfilters[0];
+      case "Protanomaly":
+        return colorfilters[1];
+      case "Deuteranopia":
+        return colorfilters[2];
+      case "Deuteranomaly":
+        return colorfilters[3];
+      case "Tritanopia":
+        return colorfilters[4];
+      case "Tritanomaly":
+        return colorfilters[5];
       default:
-        return { red: [1, 0, 0], green: [0, 1, 0], blue: [0, 0, 1] };
+        return colorfilters[6];
     }
   };
 
-  //TODO fix resize artefakt am anfang
-
+  /**
+   * Applies the color filtering to the images
+   */
   const applyColorFilter = (): void => {
-    ctx.drawImage(video, 0, 0, colorBlindCanvas.width, colorBlindCanvas.height);
-    const imageData = ctx.getImageData(
-      0,
-      0,
-      colorBlindCanvas.width,
-      colorBlindCanvas.height
-    );
-
-    const data = imageData.data;
-    const colormatrix = getColorMatrixForBlindness(simulatedCVD);
-
-    for (let i = 0; i < data.length; i += 4) {
-      let red = data[i],
-        green = data[i + 1],
-        blue = data[i + 2];
-
-      data[i] = Math.round(
-        colormatrix.red[0] * red +
-          colormatrix.red[1] * green +
-          colormatrix.red[2] * blue
+    if (canvasRef.current) {
+      ctx.drawImage(
+        video,
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
       );
-      data[i + 1] = Math.round(
-        colormatrix.green[0] * red +
-          colormatrix.green[1] * green +
-          colormatrix.green[2] * blue
+      const imageData: ImageData = ctx.getImageData(
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
       );
-      data[i + 2] = Math.round(
-        colormatrix.blue[0] * red +
-          colormatrix.blue[1] * green +
-          colormatrix.blue[2] * blue
+      const data: any = imageData.data;
+      const colormatrix: ColorMatrix = getColorMatrixForBlindness(
+        simulatedCVD,
+        colorfilters
       );
+
+      for (let i: number = 0; i < data.length; i += 4) {
+        let red: number = data[i],
+          green: number = data[i + 1],
+          blue: number = data[i + 2];
+
+        data[i] = Math.round(
+          colormatrix.red[0] * red +
+            colormatrix.red[1] * green +
+            colormatrix.red[2] * blue
+        );
+        data[i + 1] = Math.round(
+          colormatrix.green[0] * red +
+            colormatrix.green[1] * green +
+            colormatrix.green[2] * blue
+        );
+        data[i + 2] = Math.round(
+          colormatrix.blue[0] * red +
+            colormatrix.blue[1] * green +
+            colormatrix.blue[2] * blue
+        );
+      }
+      ctx.putImageData(imageData, 0, 0);
     }
-    ctx.putImageData(imageData, 0, 0);
   };
 
   return (
-    <div className={`${isMultiView ? 'player multiview' : 'player'}`}>
+    <div className={`${isMultiView ? "player multiview" : "player"}`}>
       <div>
         {isColorblindMode ? (
           <canvas ref={canvasRef} id="colorBlindCanvas"></canvas>
         ) : (
-          <video key={selectedFile} ref={videoRef} id="video" width={VIDEO_WIDTH} controls preload="metadata">
+          <video
+            key={selectedFile}
+            ref={videoRef}
+            id="video"
+            width={VIDEO_WIDTH}
+            controls
+            preload="metadata"
+          >
             <source src={selectedFile} type="video/mp4" />
           </video>
         )}

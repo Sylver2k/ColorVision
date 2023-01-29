@@ -1,5 +1,10 @@
 import IshiharaImageProps from "interfaces/IshiharaImageProps";
 import "./ishiharaimage.css";
+/**
+ *
+ * @param imageId to get the correct image from the /images folder
+ * @returns the correct image
+ */
 function IshiharaImage({ imageId }: IshiharaImageProps) {
   return (
     <img

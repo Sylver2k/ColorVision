@@ -12,20 +12,21 @@ import TestBtn from "../TestBtn/TestBtn";
  * The frame for the players and settings buttons
  * @param selectedFile default or uploaded file
  * @param colorblindFile the converted file
+ * @param cvd the selected color filter
+ * @param videoRef a reference to the video
+ * @param canvasRef a reference to the canvas
  * @returns the complete player frame
  */
 function PlayerFrame({
   selectedFile,
-  colorblindFile,
   cvd,
   videoRef,
   canvasRef,
 }: PlayerFrameProps) {
-  const [isPaused, setIsPaused] = useState<boolean>(true);
   const [isMultiView, setIsMultiView] = useState<boolean>(false);
   const [currentVolume, setCurrentVolume] = useState<number>(50);
   const [timePosition, setTimePosition] = useState<number>(0);
-  const [videoPosition, setVideoPosition] = useState<number | undefined>(0);
+  const [videoPosition] = useState<number | undefined>(0);
 
   return (
     <div className="playercontainer">
@@ -35,43 +36,34 @@ function PlayerFrame({
             <Player
               videoRef={videoRef}
               canvasRef={canvasRef}
-              isPaused={isPaused}
               isColorblindMode={false}
               isMultiView={isMultiView}
               selectedFile={selectedFile}
               currentVolume={currentVolume}
-              colorblindFile={colorblindFile}
               timePosition={timePosition}
               simulatedCVD={cvd}
-              setVideoPosition={setVideoPosition}
             />
           ) : (
             <div className="multiview-container">
               <Player
                 videoRef={videoRef}
                 canvasRef={canvasRef}
-                isPaused={isPaused}
                 isColorblindMode={false}
                 isMultiView={isMultiView}
                 selectedFile={selectedFile}
                 currentVolume={currentVolume}
-                colorblindFile={colorblindFile}
                 timePosition={timePosition}
                 simulatedCVD={cvd}
-                setVideoPosition={setVideoPosition}
               />
               <Player
                 videoRef={videoRef}
                 canvasRef={canvasRef}
-                isPaused={isPaused}
                 isColorblindMode={true}
                 isMultiView={isMultiView}
                 selectedFile={selectedFile}
                 currentVolume={currentVolume}
-                colorblindFile={colorblindFile}
                 timePosition={timePosition}
                 simulatedCVD={cvd}
-                setVideoPosition={setVideoPosition}
               />
             </div>
           )}
