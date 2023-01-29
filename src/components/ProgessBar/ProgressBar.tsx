@@ -16,7 +16,6 @@ function ProgressBar({ setTimePosition, videoPosition }: ProgressBarProps) {
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           setTimePosition(parseInt(event.target.value))
         }
-        // value={videoPosition}
       ></input>
     </div>
   );
