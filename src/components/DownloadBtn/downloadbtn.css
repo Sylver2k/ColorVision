@@ -40,3 +40,7 @@
   visibility: visible;
   opacity: 1;
 }
+
+.download {
+  display:none;
+}
