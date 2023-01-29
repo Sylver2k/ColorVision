@@ -1,16 +1,17 @@
 import "./simulatebtn.css";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import SimulateBtnProps from "interfaces/SimulateBtnProps";
 
 /**
  * Return to simulation page
  * @returns button to return to simulation page
  */
-function SimulateBtn() {
+function SimulateBtn({ hasCVD }: SimulateBtnProps) {
   const history: NavigateFunction = useNavigate();
   const pageTarget: string = "/";
   return (
     <div className="back" onClick={() => history(pageTarget)}>
-      Simulate your deficiency now
+      Simulate {hasCVD ? "your" : "a"} deficiency now
     </div>
   );
 }

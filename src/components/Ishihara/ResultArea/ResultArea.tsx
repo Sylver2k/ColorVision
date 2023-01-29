@@ -32,10 +32,15 @@ function ResultArea({ blindness }: ResultAreaProps) {
     }
     return "";
   };
+
+  const hasAnColorVisionDeficiency = (): boolean => {
+    return blindness.length >= 1
+  }
+
   return (
     <div className="result-frame">
       <p className="ishihara-result">{getUserResult(blindness)}</p>
-      <SimulateBtn />
+      <SimulateBtn hasCVD={hasAnColorVisionDeficiency()} />
     </div>
   );
 }

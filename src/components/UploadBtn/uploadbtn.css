@@ -5,10 +5,10 @@ input[type="file"] {
 .on-dragging {
   background: repeating-linear-gradient(
     -45deg,
-    #039BE5 0px,
-    #039BE5 20px,
-    #90CAF9 20px,
-    #90CAF9 40px
+    #85611b 0px,
+    #927334 20px,
+    #ffffff 20px,
+    #ffffff 40px
   );
 }
 .button-branding {

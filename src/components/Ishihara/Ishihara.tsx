@@ -1,9 +1,10 @@
 import "./ishihara.css";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import solutions from "./solutions.json";
 import IshiharaImage from "./IshiharaImage/IshiharaImage";
 import ResultArea from "./ResultArea/ResultArea";
 import { ISolution } from "interfaces/IshiharaImageProps";
+import { NavigateFunction, useNavigate } from "react-router";
 /**
  * Pictures to test for colorblindness
  * @returns Ishihara Pictures
@@ -16,6 +17,9 @@ function Ishihara() {
   const inputRef = useRef<HTMLInputElement>(null);
   let blindnesses: string[] = [];
   const [message, setMessage] = useState<string>("");
+
+  const history: NavigateFunction = useNavigate();
+  const pageTarget: string = "/";
 
   /**
    * Creates an array of color deficiencies
@@ -81,33 +85,44 @@ function Ishihara() {
   };
 
   return (
-    <div className="ishihara-container">
-      <div className="ishihara-tutorialframe">
-        <h1 className="ishihara-header">Ishihara Test</h1>
-        <div className="ishihara-tutorial">
-          The test can only determine protanomaly, protanopia and deuteranopia
-          color blindness. You have to enter the number(s) for each plate you
-          can see. If you don't see anything just click to the next button.
-          There will be 9 plates.
+    <div className="page-container">
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      />
+      <div className="ishihara-container">
+        <div className="close-container">
+          <button className="close-test-btn" onClick={() => history(pageTarget)}>
+            <span id="close-icon" className="material-symbols-outlined">close</span>
+          </button>
         </div>
-      </div>
-      <IshiharaImage imageId={imageId} />
-      {!blindness ? (
-        <div className="ishihara-controls">
-          <input
-            type="text"
-            className="ishihara-input"
-            ref={inputRef}
-            onChange={handleChange}
-            placeholder="Please enter a number"
-          />
-          <div className="next-btn" onClick={handleClick}>
-            Next
+        <div className="ishihara-tutorialframe">
+          <h1 className="ishihara-header">Ishihara Test</h1>
+          <div className="ishihara-tutorial">
+            The test can only determine protanomaly, protanopia and deuteranopia
+            color blindness. You have to enter the number(s) for each plate you
+            can see. If you don't see anything just click to the next button.
+            There will be 9 plates.
           </div>
         </div>
-      ) : (
-        <ResultArea blindness={blindness} />
-      )}
+        <IshiharaImage imageId={imageId} />
+        {!blindness ? (
+          <div className="ishihara-controls">
+            <input
+              type="text"
+              className="ishihara-input"
+              ref={inputRef}
+              onChange={handleChange}
+              placeholder="Please enter a number"
+            />
+            <div className="next-btn" onClick={handleClick}>
+              Next
+            </div>
+          </div>
+        ) : (
+          <ResultArea blindness={blindness} />
+        )}
+      </div>
     </div>
   );
 }
