@@ -13,7 +13,7 @@ function App() {
   const canvasRef: RefObject<HTMLCanvasElement> =
     useRef<HTMLCanvasElement>(null);
   const videoRef: RefObject<HTMLVideoElement> = useRef<HTMLVideoElement>(null);
-  const dropzoneRef = useRef<HTMLInputElement>(null);
+  const dropzoneRef = useRef<HTMLLabelElement>(null);
 
   const useDefaultVideoOrUserInput = (selectedFile: string): string => {
     return selectedFile === "default.mp4"

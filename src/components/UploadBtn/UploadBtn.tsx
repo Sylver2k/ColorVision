@@ -42,7 +42,12 @@ function UploadBtn({ setSelectedFile, dropzoneRef }: UploadBtnProps) {
       onDrop={(event) => dropHandler(event)}
       onDragOver={(event) => dragOverHandler(event)}
     >
-      <label id="drop_zone" htmlFor="file-upload" className="button-branding">
+      <label
+        id="drop_zone"
+        htmlFor="file-upload"
+        className="button-branding"
+        ref={dropzoneRef}
+      >
         <input
           type="file"
           id="file-upload"
@@ -50,7 +55,6 @@ function UploadBtn({ setSelectedFile, dropzoneRef }: UploadBtnProps) {
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             uploadFile(event);
           }}
-          ref={dropzoneRef}
         ></input>
         Upload
       </label>
